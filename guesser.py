@@ -17,10 +17,10 @@ def make_accusation(past_guess, response, user_number):
     return None
 
 def guess_number(max_number):
-    max_guesses = math.ceil(math.log2(max_number))
+    max_guesses = int(math.log2(max_number)) + 1
+    remaining_guesses = max_guesses
     clear_console()
     print(Fore.CYAN + "Think of a number between 1 and {}.".format(max_number) + Style.RESET_ALL)
-    print(Fore.GREEN + "I can guess your number in at most {} guesses!".format(max_guesses) + Style.RESET_ALL)
 
     low = 1
     high = max_number
@@ -39,12 +39,14 @@ def guess_number(max_number):
             return
 
         guesses += 1
+        remaining_guesses = max_guesses - guesses
         guess = (low + high) // 2
         clear_console()
         print(Fore.YELLOW + "Guess {}: My guess is {}".format(guesses, guess) + Style.RESET_ALL)
         print("1: My number is more than {}".format(guess))
         print("2: My number is less than {}".format(guess))
         print("3: Correct")
+        print(Fore.GREEN + "I will only need {} more guess(es)".format(remaining_guesses) + Style.RESET_ALL)
         response = input("Enter your response (1, 2, or 3): ")
 
         if response == "3":
